@@ -89,6 +89,10 @@ class NewsArticle
     public function setTitle(string $Title): self
     {
         $this->Title = $Title;
+        if($Title)
+        {
+            $this->setUpdatedAt(new DateTime);
+        }
         return $this;
     }
 
@@ -107,6 +111,10 @@ class NewsArticle
     public function setDescription(string $Description): self
     {
         $this->Description = $Description;
+        if($Description)
+        {
+            $this->setUpdatedAt(new DateTime);
+        }
         return $this;
     }
 
@@ -143,6 +151,9 @@ class NewsArticle
     public function setImage(?string $Image): self
     {
         $this->Image = $Image;
+        if($Image) {
+            $this->setUpdatedAt(new DateTime);
+        }
         return $this;
     }
 
@@ -162,7 +173,7 @@ class NewsArticle
         $this->ImageFile = $ImageFile;
         if($ImageFile)
         {
-            $this->UpdatedAt = new DateTime();
+            $this->setUpdatedAt(new DateTime);
         }
     }
 
@@ -192,6 +203,9 @@ class NewsArticle
     public function setPublished(bool $isPublished): self
     {
         $this->Published = $isPublished;
+        if($isPublished) {
+            $this->setUpdatedAt(new DateTime);
+        }
         return $this;
     }
 }
