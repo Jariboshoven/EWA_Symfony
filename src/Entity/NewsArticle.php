@@ -32,12 +32,12 @@ class NewsArticle
     private $Description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="integer")
      */
     private $CreationDate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="integer")
      */
     private $UpdatedAt;
 
@@ -52,9 +52,11 @@ class NewsArticle
     private $Published;
 
     /**
-     * @Vich\UploadableField(mapping="images", fileNameProperty="Image")
+     * @Vich\UploadableField(mapping="news", fileNameProperty="Image")
      */
     private $ImageFile;
+
+    private $timestamp;
 
     /**
      * NewsArticle constructor.
@@ -62,8 +64,8 @@ class NewsArticle
      */
     public function __construct()
     {
-        $this->CreationDate = new DateTime();
-        $this->setUpdatedAt(new DateTime());
+        $this->setCreationDate(time()) ;
+        $this->setUpdatedAt(time());
     }
 
     /**
@@ -82,16 +84,18 @@ class NewsArticle
         return $this->Title;
     }
 
-    /**
-     * @param string $Title
-     * @return $this
-     */
+	/**
+	 * @param string $Title
+	 *
+	 * @return $this
+	 * @throws Exception
+	 */
     public function setTitle(string $Title): self
     {
         $this->Title = $Title;
         if($Title)
         {
-            $this->setUpdatedAt(new DateTime);
+            $this->setUpdatedAt(time());
         }
         return $this;
     }
@@ -104,33 +108,35 @@ class NewsArticle
         return $this->Description;
     }
 
-    /**
-     * @param string $Description
-     * @return $this
-     */
+	/**
+	 * @param string $Description
+	 *
+	 * @return $this
+	 * @throws Exception
+	 */
     public function setDescription(string $Description): self
     {
         $this->Description = $Description;
         if($Description)
         {
-            $this->setUpdatedAt(new DateTime);
+            $this->setUpdatedAt(time());
         }
         return $this;
     }
 
     /**
-     * @return DateTime|null
+     * @return int|null
      */
-    public function getCreationDate(): ?DateTime
+    public function getCreationDate(): ?int
     {
         return $this->CreationDate;
     }
 
     /**
-     * @param DateTimeInterface $CreationDate
+     * @param int $CreationDate
      * @return $this
      */
-    public function setCreationDate(DateTimeInterface $CreationDate): self
+    public function setCreationDate(int $CreationDate): self
     {
         $this->CreationDate = $CreationDate;
         return $this;
@@ -144,15 +150,17 @@ class NewsArticle
         return $this->Image;
     }
 
-    /**
-     * @param string|null $Image
-     * @return $this
-     */
+	/**
+	 * @param string|null $Image
+	 *
+	 * @return $this
+	 * @throws Exception
+	 */
     public function setImage(?string $Image): self
     {
         $this->Image = $Image;
         if($Image) {
-            $this->setUpdatedAt(new DateTime);
+            $this->setUpdatedAt(time());
         }
         return $this;
     }
@@ -165,31 +173,33 @@ class NewsArticle
         return $this->ImageFile;
     }
 
-    /**
-     * @param mixed $ImageFile
-     */
+	/**
+	 * @param mixed $ImageFile
+	 *
+	 * @throws Exception
+	 */
     public function setImageFile($ImageFile): void
     {
         $this->ImageFile = $ImageFile;
         if($ImageFile)
         {
-            $this->setUpdatedAt(new DateTime);
+            $this->setUpdatedAt(time());
         }
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return int|null
      */
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt(): ?int
     {
         return $this->UpdatedAt;
     }
 
     /**
-     * @param DateTimeInterface $UpdatedAt
+     * @param int $UpdatedAt
      * @return $this
      */
-    public function setUpdatedAt(DateTimeInterface $UpdatedAt): self
+    public function setUpdatedAt(int $UpdatedAt): self
     {
         $this->UpdatedAt = $UpdatedAt;
         return $this;
@@ -204,7 +214,7 @@ class NewsArticle
     {
         $this->Published = $isPublished;
         if($isPublished) {
-            $this->setUpdatedAt(new DateTime);
+            $this->setUpdatedAt(time());
         }
         return $this;
     }

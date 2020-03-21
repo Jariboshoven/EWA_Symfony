@@ -39,9 +39,9 @@ easy_admin:
                 fields: [
                 {property: 'name', label: 'Naam', sortable: true},
                 {property: 'description', label: 'Beschrijving', sortable: true},
-                {property: 'CreationDate', type: 'datetime', label: 'Aanmaakdatum', sortable: true},
-                {property: 'UpdatedAt', type: 'datetime', label: 'Laatst geupdate', sortable: true},
-                {property: 'Image', type: 'image', label: 'Afbeelding', base_path: '%upload_path%', sortable: false}
+                {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
+                {property: 'UpdatedAt', type: 'text', label: 'Laatst geupdate', sortable: true},
+                {property: 'Image', type: 'image', label: 'Afbeelding', base_path: '%partner_upload_path%', sortable: false}
                 ]
             show:
                 fields:
@@ -49,7 +49,7 @@ easy_admin:
                     - {property: 'description', type: 'raw', label: 'Beschrijving'}
                     - {property: 'CreationDate', label: 'Aanmaakdatum'}
                     - {property: 'UpdatedAt', label: 'Laatst geupdate'}
-                    - {property: 'image', type: 'image', base_path: '%upload_path%', label: 'Afbeelding'}
+                    - {property: 'image', type: 'image', base_path: '%partner_upload_path%', label: 'Afbeelding'}
         NewsArticle:
             class: App\Entity\NewsArticle
             label: "Nieuws Artikel"
@@ -70,10 +70,11 @@ easy_admin:
                 fields: [
                     {property: 'Title', label: 'Titel', sortable: true},
                     {property: 'Description', label: 'Beschrijving', sortable: true},
-                    {property: 'CreationDate', type: 'datetime', label: 'Aanmaakdatum', sortable: true},
-                    {property: 'UpdatedAt', type: 'datetime', label: 'Laatst geupdate', sortable: true},
+                    {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
+                    {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
+                    {property: 'UpdatedAt', type: 'text', label: 'Laatst geupdate', sortable: true},
                     {property: 'Published', type: 'boolean', label: 'Gepubliceerd', sortable: true}
-                    {property: 'Image', type: 'image', label: 'Afbeelding', base_path: '%upload_path%', sortable: false}
+                    {property: 'Image', type: 'image', label: 'Afbeelding', base_path: '%news_upload_path%', sortable: false}
                 ]
             show:
                 fields:
@@ -82,4 +83,4 @@ easy_admin:
                     - {property: 'CreationDate', label: 'Aanmaakdatum'}
                     - {property: 'UpdatedAt', label: 'Laatst geupdate'}
                     - {property: 'Published', label: 'Gepubliceerd'}
-                    - {property: 'image', type: 'image', base_path: '%upload_path%', label: 'Afbeelding'}
+                    - {property: 'image', type: 'image', base_path: '%news_upload_path%', label: 'Afbeelding'}

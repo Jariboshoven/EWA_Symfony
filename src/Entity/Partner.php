@@ -32,12 +32,12 @@ class Partner
     private $description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="integer")
      */
     private $CreationDate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="integer")
      */
     private $UpdatedAt;
 
@@ -47,7 +47,7 @@ class Partner
     private $Image;
 
     /**
-     * @Vich\UploadableField(mapping="images", fileNameProperty="Image")
+     * @Vich\UploadableField(mapping="partner", fileNameProperty="Image")
      */
     private $ImageFile;
 
@@ -57,8 +57,8 @@ class Partner
      */
     public function __construct()
     {
-        $this->CreationDate = new DateTime();
-        $this->setUpdatedAt(new DateTime());
+		$this->setCreationDate(time());
+		$this->setUpdatedAt(time());
     }
 
     public function getId(): ?int
@@ -74,14 +74,18 @@ class Partner
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return $this
-     */
+	/**
+	 * @param string $name
+	 *
+	 * @return $this
+	 * @throws Exception
+	 */
     public function setName(string $name): self
     {
         $this->name = $name;
-
+		if($name){
+			$this->setUpdatedAt(time());
+		}
         return $this;
     }
 
@@ -93,33 +97,35 @@ class Partner
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     * @return $this
-     */
+	/**
+	 * @param string $description
+	 *
+	 * @return $this
+	 * @throws Exception
+	 */
     public function setDescription(string $description): self
     {
         $this->description = $description;
         if($description)
         {
-            $this->setUpdatedAt(new DateTime());
+            $this->setUpdatedAt(time());
         }
         return $this;
     }
 
     /**
-     * @return DateTime|null
+     * @return int|null
      */
-    public function getCreationDate(): ?DateTime
+    public function getCreationDate(): ?int
     {
         return $this->CreationDate;
     }
 
     /**
-     * @param DateTimeInterface $CreationDate
+     * @param int $CreationDate
      * @return $this
      */
-    public function setCreationDate(DateTimeInterface $CreationDate): self
+    public function setCreationDate(int $CreationDate): self
     {
         $this->CreationDate = $CreationDate;
         return $this;
@@ -133,15 +139,17 @@ class Partner
         return $this->Image;
     }
 
-    /**
-     * @param string|null $Image
-     * @return $this
-     */
+	/**
+	 * @param string|null $Image
+	 *
+	 * @return $this
+	 * @throws Exception
+	 */
     public function setImage(?string $Image): self
     {
         $this->Image = $Image;
         if($Image) {
-            $this->setUpdatedAt(new DateTime);
+            $this->setUpdatedAt(time());
         }
         return $this;
     }
@@ -154,31 +162,33 @@ class Partner
         return $this->ImageFile;
     }
 
-    /**
-     * @param mixed $ImageFile
-     */
+	/**
+	 * @param mixed $ImageFile
+	 *
+	 * @throws Exception
+	 */
     public function setImageFile($ImageFile): void
     {
         $this->ImageFile = $ImageFile;
         if($ImageFile)
         {
-            $this->setUpdatedAt(new DateTime);
+            $this->setUpdatedAt(time());
         }
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return int|null
      */
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt(): ?int
     {
         return $this->UpdatedAt;
     }
 
     /**
-     * @param DateTimeInterface $UpdatedAt
+     * @param int $UpdatedAt
      * @return $this
      */
-    public function setUpdatedAt(DateTimeInterface $UpdatedAt): self
+    public function setUpdatedAt(int $UpdatedAt): self
     {
         $this->UpdatedAt = $UpdatedAt;
         return $this;

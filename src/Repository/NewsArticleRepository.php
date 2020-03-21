@@ -19,6 +19,34 @@ class NewsArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, NewsArticle::class);
     }
 
+	/**
+	 * @return NewsArticle[] Returns an array of NewsArticle objects
+	 */
+	public function findPublishedArticles(): array
+	{
+		return $this->createQueryBuilder('n')
+			->andWhere('n.Published = :val')
+			->setParameter('val', 1)
+			->orderBy('n.id', 'ASC')
+			->setMaxResults(10)
+			->getQuery()
+			->getResult()
+			;
+	}
+
+	/**
+	 * @return NewsArticle[] Returns an array of NewsArticle objects
+	 */
+	public function findRecentArticles($number): array
+	{
+		return $this->createQueryBuilder('n')
+			->orderBy('n.CreationDate', 'DESC')
+			->setMaxResults($number)
+			->getQuery()
+			->getResult()
+			;
+	}
+
     // /**
     //  * @return NewsArticle[] Returns an array of NewsArticle objects
     //  */
