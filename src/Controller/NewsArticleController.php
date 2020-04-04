@@ -29,6 +29,8 @@ class NewsArticleController extends AbstractController {
 
 	/**
 	 * @Route("/api/news/all", name="get_news", methods={"GET"})
+	 *
+	 * @return Response
 	 */
 	public function getAllNewsArticles(): Response
 	{
@@ -39,8 +41,11 @@ class NewsArticleController extends AbstractController {
 
 	/**
 	 * @Route("/api/news/recent/{number}", name="get_recent_news", methods={"GET"})
+	 * @param int $number
+	 *
+	 * @return Response
 	 */
-	public function getRecentNewsArticles($number): Response
+	public function getRecentNewsArticles(int $number): Response
 	{
 		$newsArticles = $this->newsArticleRepository->findRecentArticles($number);
 		$response = $this->serializer->serialize($newsArticles, 'json');

@@ -29,6 +29,8 @@ class PartnerController extends AbstractController {
 
 	/**
 	 * @Route("/api/partner/all", name="get_partners", methods={"GET"})
+	 *
+	 * @return Response
 	 */
 	public function getAllPartners(): Response
 	{

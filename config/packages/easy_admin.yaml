@@ -1,86 +1,124 @@
 easy_admin:
-    design:
-        menu:
-            - {label: "Dashboard"}
-            - label: "Partners"
-              children:
-                  - {entity: Partner, label: "Alle partners", icon: "th-list"}
-                  - {entity: Partner, label: "Partner toevoegen", icon: "plus", params: {action: 'new'}}
-            - label: "Nieuws Artikelen"
-              children:
-                  - {entity: NewsArticle, label: "Alle nieuws artikelen", icon: "th-list"}
-                  - {entity: NewsArticle, label: "Nieuws artikel toevoegen", icon: "plus", params: {action: 'new'}}
-            - {entity: NewsArticle, label: "Admins", icon: "user"}
+  design:
+    menu:
+      - {label: "Dashboard"}
+      - label: "Partners"
+        children:
+          - {entity: Partner, label: "Alle partners", icon: "th-list"}
+          - {entity: Partner, label: "Partner toevoegen", icon: "plus", params: {action: 'new'}}
+      - label: "Nieuws Artikelen"
+        children:
+          - {entity: NewsArticle, label: "Alle nieuws artikelen", icon: "th-list"}
+          - {entity: NewsArticle, label: "Nieuws artikel toevoegen", icon: "plus", params: {action: 'new'}}
+      - label: "Informatie"
+        children:
+          - {entity: Information, label: "Alle informatie artikelen", icon: "th-list"}
+          - {entity: Information, label: "Informatie artikel toevoegen", icon: "plus", params: {action: 'new'}}
+      - {entity: NewsArticle, label: "Admins", icon: "user"}
 
 
-    site_name: 'EWA Haaglanden'
-    user:
-        display_name: true
-        display_avatar: false
-    entities:
-        # List the entity class name you want to manage
-#        - App\Entity\User
-        Partner:
-            class: App\Entity\Partner
-            label: "Partner"
-            form:
-                fields:
-                    - {type: 'group', icon: 'info-circle', label: 'Informatie', css_class: 'col-lg-7'}
-                    - {property: 'name', type: 'text', label: 'Naam'}
-                    - {type: 'group', icon: 'photo', label: 'Afbeelding', css_class: 'col-lg-5'}
-                    - {property: 'ImageFile', type: 'vich_image', label: 'Bestand'}
-                    - {type: 'group', icon: 'list', label: 'Beschrijving'}
-                    - {property: 'description', type: 'text_editor'}
-            list:
-                collapse_actions: true
-                actions: ['show', 'edit', 'delete']
-                batch_actions: ['delete']
-                title: Partners
-                fields: [
-                {property: 'name', label: 'Naam', sortable: true},
-                {property: 'description', label: 'Beschrijving', sortable: true},
-                {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
-                {property: 'UpdatedAt', type: 'text', label: 'Laatst geupdate', sortable: true},
-                {property: 'Image', type: 'image', label: 'Afbeelding', base_path: '%partner_upload_path%', sortable: false}
-                ]
-            show:
-                fields:
-                    - {property: 'name', label: 'Naam'}
-                    - {property: 'description', type: 'raw', label: 'Beschrijving'}
-                    - {property: 'CreationDate', label: 'Aanmaakdatum'}
-                    - {property: 'UpdatedAt', label: 'Laatst geupdate'}
-                    - {property: 'image', type: 'image', base_path: '%partner_upload_path%', label: 'Afbeelding'}
-        NewsArticle:
-            class: App\Entity\NewsArticle
-            label: "Nieuws Artikel"
-            form:
-                fields:
-                    - {type: 'group', icon: 'info-circle', label: 'Informatie', css_class: 'col-lg-7'}
-                    - {property: 'title', type: 'text', label: 'Titel'}
-                    - {property: 'published', type: 'checkbox', label: 'Publiceren'}
-                    - {type: 'group', icon: 'photo', label: 'Afbeelding', css_class: 'col-lg-5'}
-                    - {property: 'ImageFile', type: 'vich_image', label: 'Bestand'}
-                    - {type: 'group', icon: 'list', label: 'Beschrijving'}
-                    - {property: 'description', type: 'text_editor'}
-            list:
-                collapse_actions: true
-                actions: ['show', 'edit', 'delete']
-                batch_actions: ['delete']
-                title: Nieuws artikelen
-                fields: [
-                    {property: 'Title', label: 'Titel', sortable: true},
-                    {property: 'Description', label: 'Beschrijving', sortable: true},
-                    {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
-                    {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
-                    {property: 'UpdatedAt', type: 'text', label: 'Laatst geupdate', sortable: true},
-                    {property: 'Published', type: 'boolean', label: 'Gepubliceerd', sortable: true}
-                    {property: 'Image', type: 'image', label: 'Afbeelding', base_path: '%news_upload_path%', sortable: false}
-                ]
-            show:
-                fields:
-                    - {property: 'Title', label: 'Titel'}
-                    - {property: 'Description', type: 'raw', label: 'Beschrijving'}
-                    - {property: 'CreationDate', label: 'Aanmaakdatum'}
-                    - {property: 'UpdatedAt', label: 'Laatst geupdate'}
-                    - {property: 'Published', label: 'Gepubliceerd'}
-                    - {property: 'image', type: 'image', base_path: '%news_upload_path%', label: 'Afbeelding'}
+  site_name: 'EWA Haaglanden'
+  user:
+    display_name: true
+    display_avatar: false
+  entities:
+    # List the entity class name you want to manage
+    #        - App\Entity\User
+    Partner:
+      class: App\Entity\Partner
+      label: "Partner"
+      form:
+        fields:
+          - {type: 'group', icon: 'info-circle', label: 'Informatie', css_class: 'col-lg-7'}
+          - {property: 'name', type: 'text', label: 'Naam'}
+          - {type: 'group', icon: 'photo', label: 'Afbeelding', css_class: 'col-lg-5'}
+          - {property: 'ImageFile', type: 'vich_image', label: 'Bestand'}
+          - {type: 'group', icon: 'list', label: 'Beschrijving'}
+          - {property: 'description', type: 'text_editor'}
+      list:
+        collapse_actions: true
+        actions: ['show', 'edit', 'delete']
+        batch_actions: ['delete']
+        title: Partners
+        fields: [
+        {property: 'name', label: 'Naam', sortable: true},
+        {property: 'description', label: 'Beschrijving', sortable: true},
+        {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
+        {property: 'UpdatedAt', type: 'text', label: 'Laatst geupdate', sortable: true},
+        {property: 'Image', type: 'image', label: 'Afbeelding', base_path: '%partner_upload_path%', sortable: false}
+        ]
+      show:
+        fields:
+          - {property: 'name', label: 'Naam'}
+          - {property: 'description', type: 'raw', label: 'Beschrijving'}
+          - {property: 'CreationDate', label: 'Aanmaakdatum'}
+          - {property: 'UpdatedAt', label: 'Laatst geupdate'}
+          - {property: 'image', type: 'image', base_path: '%partner_upload_path%', label: 'Afbeelding'}
+    NewsArticle:
+      class: App\Entity\NewsArticle
+      label: "Nieuws Artikel"
+      form:
+        fields:
+          - {type: 'group', icon: 'info-circle', label: 'Informatie', css_class: 'col-lg-7'}
+          - {property: 'title', type: 'text', label: 'Titel'}
+          - {property: 'published', type: 'checkbox', label: 'Publiceren'}
+          - {type: 'group', icon: 'photo', label: 'Afbeelding', css_class: 'col-lg-5'}
+          - {property: 'ImageFile', type: 'vich_image', label: 'Bestand'}
+          - {type: 'group', icon: 'list', label: 'Beschrijving'}
+          - {property: 'description', type: 'text_editor'}
+      list:
+        collapse_actions: true
+        actions: ['show', 'edit', 'delete']
+        batch_actions: ['delete']
+        title: Nieuws artikelen
+        fields: [
+        {property: 'Title', label: 'Titel', sortable: true},
+        {property: 'Description', label: 'Beschrijving', sortable: true},
+        {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
+        {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
+        {property: 'UpdatedAt', type: 'text', label: 'Laatst geupdate', sortable: true},
+        {property: 'Published', type: 'boolean', label: 'Gepubliceerd', sortable: true}
+        {property: 'Image', type: 'image', label: 'Afbeelding', base_path: '%news_upload_path%', sortable: false}
+        ]
+      show:
+        fields:
+          - {property: 'Title', label: 'Titel'}
+          - {property: 'Description', type: 'raw', label: 'Beschrijving'}
+          - {property: 'CreationDate', label: 'Aanmaakdatum'}
+          - {property: 'UpdatedAt', label: 'Laatst geupdate'}
+          - {property: 'Published', label: 'Gepubliceerd'}
+          - {property: 'image', type: 'image', base_path: '%news_upload_path%', label: 'Afbeelding'}
+    Information:
+      class: App\Entity\Information
+      label: "Informatie"
+      form:
+        fields:
+          - {type: 'group', icon: 'info-circle', label: 'Informatie', css_class: 'col-lg-7'}
+          - {property: 'title', type: 'text', label: 'Titel'}
+          - {property: 'published', type: 'checkbox', label: 'Publiceren'}
+          - {type: 'group', icon: 'photo', label: 'Afbeelding', css_class: 'col-lg-5'}
+          - {property: 'ImageFile', type: 'vich_image', label: 'Bestand'}
+          - {type: 'group', icon: 'list', label: 'Beschrijving'}
+          - {property: 'description', type: 'text_editor'}
+      list:
+        collapse_actions: true
+        actions: ['show', 'edit', 'delete']
+        batch_actions: ['delete']
+        title: Informatie artikelen
+        fields: [
+        {property: 'Title', label: 'Titel', sortable: true},
+        {property: 'Description', label: 'Beschrijving', sortable: true},
+        {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
+        {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
+        {property: 'UpdatedAt', type: 'text', label: 'Laatst geupdate', sortable: true},
+        {property: 'Published', type: 'boolean', label: 'Gepubliceerd', sortable: true}
+        {property: 'Image', type: 'image', label: 'Afbeelding', base_path: '%news_upload_path%', sortable: false}
+        ]
+      show:
+        fields:
+          - {property: 'Title', label: 'Titel'}
+          - {property: 'Description', type: 'raw', label: 'Beschrijving'}
+          - {property: 'CreationDate', label: 'Aanmaakdatum'}
+          - {property: 'UpdatedAt', label: 'Laatst geupdate'}
+          - {property: 'Published', label: 'Gepubliceerd'}
+          - {property: 'image', type: 'image', base_path: '%information_upload_path%', label: 'Afbeelding'}

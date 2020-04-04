@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\NewsArticle;
+use App\Entity\Information;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method NewsArticle|null find($id, $lockMode = null, $lockVersion = null)
- * @method NewsArticle|null findOneBy(array $criteria, array $orderBy = null)
- * @method NewsArticle[]    findAll()
- * @method NewsArticle[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Information|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Information|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Information[]    findAll()
+ * @method Information[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class NewsArticleRepository extends ServiceEntityRepository
+class InformationRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, NewsArticle::class);
+        parent::__construct($registry, Information::class);
     }
 
 	/**
-	 * @return NewsArticle[] Returns an array of NewsArticle objects
+	 * @return Information[] Returns an array of Information objects
 	 */
 	public function findPublishedArticles(): array
 	{
@@ -37,7 +37,7 @@ class NewsArticleRepository extends ServiceEntityRepository
 	/**
 	 * @param int $number
 	 *
-	 * @return NewsArticle[] Returns an array of NewsArticle objects
+	 * @return Information[] Returns an array of Information objects
 	 */
 	public function findRecentArticles(int $number): array
 	{
@@ -48,17 +48,16 @@ class NewsArticleRepository extends ServiceEntityRepository
 			->getResult()
 			;
 	}
-
     // /**
-    //  * @return NewsArticle[] Returns an array of NewsArticle objects
+    //  * @return Information[] Returns an array of Information objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('n.id', 'ASC')
+            ->orderBy('i.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -67,10 +66,10 @@ class NewsArticleRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?NewsArticle
+    public function findOneBySomeField($value): ?Information
     {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
