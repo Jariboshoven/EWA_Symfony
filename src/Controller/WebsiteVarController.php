@@ -26,26 +26,28 @@ class WebsiteVarController extends AbstractController {
 	}
 
 	/**
-	 * @Route("/api/websitevars/all", name="get_website_vars", methods={"GET"})
+	 * @Route("/api/components", name="get_website_components", methods={"GET"})
 	 *
 	 * @return Response
 	 */
 	public function getAllWebsiteVars(): Response
 	{
-		$partners = $this->websiteVarRepository->findAll();
-		$response = $this->serializer->serialize($partners, 'json');
+		$vars = $this->websiteVarRepository->findAll();
+		$response = $this->serializer->serialize($vars, 'json');
 		return new Response($response);
 	}
 
 	/**
-	 * @Route("/api/websitevars/{component}", name="get_website_vars", methods={"GET"})
+	 * @Route("/api/component/{component}", name="get_website_vars", methods={"GET"})
+	 *
+	 * @param $component
 	 *
 	 * @return Response
 	 */
 	public function getWebsiteVarsByComponent($component): Response
 	{
-		$partners = $this->websiteVarRepository->findVarsByComponent($component);
-		$response = $this->serializer->serialize($partners, 'json');
+		$vars = $this->websiteVarRepository->findVarsByComponent($component);
+		$response = $this->serializer->serialize($vars, 'json');
 		return new Response($response);
 	}
 }
