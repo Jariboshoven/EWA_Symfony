@@ -14,8 +14,9 @@ easy_admin:
         children:
           - {entity: Information, label: "Alle informatie artikelen", icon: "th-list"}
           - {entity: Information, label: "Informatie artikel toevoegen", icon: "plus", params: {action: 'new'}}
+      - {entity: WebsiteVar, label: "Informatie van de website", icon: "th-list"}
+      - {entity: Member, label: "Aanmeldingen", icon: "user"}
       - {entity: NewsArticle, label: "Admins", icon: "user"}
-
 
   site_name: 'EWA Haaglanden'
   user:
@@ -122,3 +123,39 @@ easy_admin:
           - {property: 'UpdatedAt', label: 'Laatst geupdate'}
           - {property: 'Published', label: 'Gepubliceerd'}
           - {property: 'image', type: 'image', base_path: '%information_upload_path%', label: 'Afbeelding'}
+    Member:
+      disabled_actions: ['new', 'edit']
+      class: App\Entity\Member
+      label: "Aanmeldingen"
+      list:
+        actions: ['show', 'delete']
+        batch_actions: ['delete']
+        title: Aanmeldingen voor E-Mail
+        fields: [
+        {property: 'email', label: 'E-mail', sortable: true},
+        {property: 'firstName', label: 'Voornaam', sortable: true},
+        {property: 'lastName', type: 'text', label: 'Achternaam', sortable: true},
+        ]
+      show:
+        fields:
+          - {property: 'firstName', label: 'Voornaam'}
+          - {property: 'lastName', label: 'Achternaam'}
+          - {property: 'email', label: 'E-mail adres'}
+    WebsiteVar:
+      disabled_actions: ['delete']
+      class: App\Entity\WebsiteVar
+      label: "Informatie van de website"
+      list:
+        actions: ['show']
+        title: Informatie van de website
+        fields: [
+        {property: 'title', label: 'Titel', sortable: true},
+        {property: 'value', label: 'Waarde', sortable: true},
+        {property: 'component', type: 'text', label: 'Onderdeel', sortable: true},
+        ]
+      show:
+        fields:
+          - {property: 'title', label: 'Titel'}
+          - {property: 'value', label: 'Waarde'}
+          - {property: 'component', label: 'Onderdeel'}
+

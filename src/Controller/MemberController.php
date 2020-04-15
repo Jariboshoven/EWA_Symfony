@@ -17,12 +17,14 @@ class MemberController extends AbstractController {
 
 	private $serializer;
 	private $memberRepository;
+	private $mailController;
 
 	public function __construct(EntityManagerInterface $em)
 	{
 		$encoders = [new XmlEncoder(), new JsonEncoder()];
 		$normalizers = [new ObjectNormalizer()];
 		$this->serializer = new Serializer($normalizers, $encoders);
+		$this->mailController = new MailController();
 
 		$this->memberRepository = $em->getRepository(Member::class);
 	}
@@ -69,18 +71,23 @@ class MemberController extends AbstractController {
 		Return new Response('Success');
 	}
 
-//	/**
-//	 * @Route("/letsmail/{subject}/{info}")
-//	 */
-//	public function mailMembers($subject, $info)
-//	{
-//		$members = $this->memberRepository->findAll();
-//
-//		foreach($members as $member)
-//		{
-//
-//		}
-//
-//
-//	}
+	/**
+	 * @Route("/letsmail")
+	 */
+	public function mailMembers()
+	{
+		$members = $this->memberRepository->findAll();
+
+		foreach($members as $member)
+		{
+			$this->mailController->sendMail(
+				[
+					'to' => $member->getEmail(),
+					'name' => $member->getFirstName()
+				]
+			);
+		}
+
+
+	}
 }
