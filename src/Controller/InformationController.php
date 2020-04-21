@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Information;
 use Doctrine\ORM\EntityManagerInterface;
 
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,11 +32,25 @@ class InformationController extends AbstractController {
 	 * @Route("/api/information/all", name="get_information", methods={"GET"})
 	 *
 	 * @return Response
+	 * @throws Exception
 	 */
 	public function getAllInformation(): Response
 	{
-		$newsArticles = $this->informationRepository->findPublishedArticles();
-		$response = $this->serializer->serialize($newsArticles, 'json');
+		$informationArticles = $this->informationRepository->findPublishedArticles();
+
+		foreach($informationArticles as $informationArticle) {
+			/** @var $informationArticle Information */
+			$video = $informationArticle->getVideo();
+			if(!$video) {
+				continue;
+			}
+
+			$informationArticle->setVideo(
+			'<div class="video"><b-embed class="embed" type="iframe" aspect="16by9" src="'. $video .'" allowfullscreen></b-embed></div>'
+			);
+		}
+
+		$response = $this->serializer->serialize($informationArticles, 'json');
 		return new Response($response);
 	}
 
@@ -44,11 +59,24 @@ class InformationController extends AbstractController {
 	 * @param int $number
 	 *
 	 * @return Response
+	 * @throws Exception
 	 */
 	public function getRecentInformation(int $number): Response
 	{
-		$newsArticles = $this->informationRepository->findRecentArticles($number);
-		$response = $this->serializer->serialize($newsArticles, 'json');
+		$informationArticles = $this->informationRepository->findRecentArticles($number);
+
+		foreach($informationArticles as $informationArticle) {
+			/** @var $informationArticle Information */
+			$video = $informationArticle->getVideo();
+			if(!$video) {
+				continue;
+			}
+			$informationArticle->setVideo(
+				'<div class="video"><b-embed class="embed" type="iframe" aspect="16by9" src="'. $video .'" allowfullscreen></b-embed></div>'
+			);
+		}
+
+		$response = $this->serializer->serialize($informationArticles, 'json');
 		return new Response($response);
 	}
 }
