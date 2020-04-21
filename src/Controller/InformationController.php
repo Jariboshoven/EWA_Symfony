@@ -38,18 +38,6 @@ class InformationController extends AbstractController {
 	{
 		$informationArticles = $this->informationRepository->findPublishedArticles();
 
-		foreach($informationArticles as $informationArticle) {
-			/** @var $informationArticle Information */
-			$video = $informationArticle->getVideo();
-			if(!$video) {
-				continue;
-			}
-
-			$informationArticle->setVideo(
-			'<div class="video"><b-embed class="embed" type="iframe" aspect="16by9" src="'. $video .'" allowfullscreen></b-embed></div>'
-			);
-		}
-
 		$response = $this->serializer->serialize($informationArticles, 'json');
 		return new Response($response);
 	}
@@ -64,17 +52,6 @@ class InformationController extends AbstractController {
 	public function getRecentInformation(int $number): Response
 	{
 		$informationArticles = $this->informationRepository->findRecentArticles($number);
-
-		foreach($informationArticles as $informationArticle) {
-			/** @var $informationArticle Information */
-			$video = $informationArticle->getVideo();
-			if(!$video) {
-				continue;
-			}
-			$informationArticle->setVideo(
-				'<div class="video"><b-embed class="embed" type="iframe" aspect="16by9" src="'. $video .'" allowfullscreen></b-embed></div>'
-			);
-		}
 
 		$response = $this->serializer->serialize($informationArticles, 'json');
 		return new Response($response);

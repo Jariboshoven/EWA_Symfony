@@ -38,4 +38,17 @@ class PartnerController extends AbstractController {
 		$response = $this->serializer->serialize($partners, 'json');
 		return new Response($response);
 	}
+
+	/**
+	 * @Route("/api/partner/id/{id}", name="get_partner_by_id", methods={"GET"})
+	 * @param int $id
+	 *
+	 * @return Response
+	 */
+	public function getPartnerById(int $id): Response
+	{
+		$partner = $this->partnerRepository->findBy(['id' => $id]);
+		$response = $this->serializer->serialize($partner, 'json');
+		return new Response($response);
+	}
 }

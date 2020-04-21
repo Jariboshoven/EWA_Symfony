@@ -51,4 +51,17 @@ class NewsArticleController extends AbstractController {
 		$response = $this->serializer->serialize($newsArticles, 'json');
 		return new Response($response);
 	}
+
+	/**
+	 * @Route("/api/news/id/{id}", name="get_news_by_id", methods={"GET"})
+	 * @param int $id
+	 *
+	 * @return Response
+	 */
+	public function getNewsArticleById(int $id): Response
+	{
+		$newsArticle = $this->newsArticleRepository->findBy(['id' => $id]);
+		$response = $this->serializer->serialize($newsArticle, 'json');
+		return new Response($response);
+	}
 }
