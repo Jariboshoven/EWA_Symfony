@@ -9,7 +9,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 /**
  * @method Partner|null find($id, $lockMode = null, $lockVersion = null)
  * @method Partner|null findOneBy(array $criteria, array $orderBy = null)
- * @method Partner[]    findAll()
  * @method Partner[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class PartnerRepository extends ServiceEntityRepository
@@ -18,6 +17,11 @@ class PartnerRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Partner::class);
     }
+
+	public function getAll()
+	{
+		return $this->findBy(array(), array('CreationDate' => 'DESC'));
+	}
 
     // /**
     //  * @return Partner[] Returns an array of Partner objects

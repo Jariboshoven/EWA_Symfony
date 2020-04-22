@@ -34,8 +34,9 @@ class PartnerController extends AbstractController {
 	 */
 	public function getAllPartners(): Response
 	{
-		$partners = $this->partnerRepository->findAll();
+		$partners = $this->partnerRepository->getAll();
 		$response = $this->serializer->serialize($partners, 'json');
+
 		return new Response($response);
 	}
 

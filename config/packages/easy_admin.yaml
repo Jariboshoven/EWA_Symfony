@@ -14,9 +14,8 @@ easy_admin:
         children:
           - {entity: Information, label: "Alle informatie artikelen", icon: "th-list"}
           - {entity: Information, label: "Informatie artikel toevoegen", icon: "plus", params: {action: 'new'}}
+      - {entity: User, label: "Admins", icon: "user"}
       - {entity: WebsiteVar, label: "Informatie van de website", icon: "th-list"}
-      - {entity: Member, label: "Aanmeldingen", icon: "user"}
-      - {entity: NewsArticle, label: "Admins", icon: "user"}
 
   site_name: 'EWA Haaglanden'
   user:
@@ -125,24 +124,6 @@ easy_admin:
           - {property: 'Published', label: 'Gepubliceerd'}
           - {property: 'image', type: 'image', base_path: '%information_upload_path%', label: 'Afbeelding'}
           - {property: 'video', type: 'text', label: 'Video URL'}
-    Member:
-      disabled_actions: ['new', 'edit']
-      class: App\Entity\Member
-      label: "Aanmeldingen"
-      list:
-        actions: ['show', 'delete']
-        batch_actions: ['delete']
-        title: Aanmeldingen voor E-Mail
-        fields: [
-        {property: 'email', label: 'E-mail', sortable: true},
-        {property: 'firstName', label: 'Voornaam', sortable: true},
-        {property: 'lastName', type: 'text', label: 'Achternaam', sortable: true},
-        ]
-      show:
-        fields:
-          - {property: 'firstName', label: 'Voornaam'}
-          - {property: 'lastName', label: 'Achternaam'}
-          - {property: 'email', label: 'E-mail adres'}
     WebsiteVar:
       disabled_actions: ['delete']
       class: App\Entity\WebsiteVar
@@ -160,4 +141,13 @@ easy_admin:
           - {property: 'title', label: 'Titel'}
           - {property: 'value', label: 'Waarde'}
           - {property: 'component', label: 'Onderdeel'}
+    User:
+      disabled_actions: ['delete', 'edit', 'show', 'new']
+      class: App\Entity\User
+      list:
+        title: Alle admin accounts
+        fields: [
+        {property: 'email', label: 'Email ', sortable: true},
+        {property: 'roles', label: 'Roles', sortable: true},
+        ]
 

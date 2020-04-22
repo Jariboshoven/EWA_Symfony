@@ -27,7 +27,7 @@ class InformationRepository extends ServiceEntityRepository
 		return $this->createQueryBuilder('n')
 			->andWhere('n.Published = :val')
 			->setParameter('val', 1)
-			->orderBy('n.id', 'ASC')
+			->orderBy('n.CreationDate', 'DESC')
 			->setMaxResults(10)
 			->getQuery()
 			->getResult()

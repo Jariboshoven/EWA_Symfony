@@ -9,7 +9,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 /**
  * @method NewsArticle|null find($id, $lockMode = null, $lockVersion = null)
  * @method NewsArticle|null findOneBy(array $criteria, array $orderBy = null)
- * @method NewsArticle[]    findAll()
  * @method NewsArticle[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class NewsArticleRepository extends ServiceEntityRepository
@@ -27,7 +26,7 @@ class NewsArticleRepository extends ServiceEntityRepository
 		return $this->createQueryBuilder('n')
 			->andWhere('n.Published = :val')
 			->setParameter('val', 1)
-			->orderBy('n.id', 'ASC')
+			->orderBy('n.CreationDate', 'DESC')
 			->setMaxResults(10)
 			->getQuery()
 			->getResult()
