@@ -45,11 +45,6 @@ class Information
 	private $Image;
 
 	/**
-	 * @ORM\Column(type="string", length=255, nullable=true)
-	 */
-	private $Video;
-
-	/**
 	 * @ORM\Column(type="boolean")
 	 */
 	private $Published;
@@ -152,14 +147,6 @@ class Information
 	}
 
 	/**
-	 * @return string|null
-	 */
-	public function getVideo(): ?string
-	{
-		return $this->Video;
-	}
-
-	/**
 	 * @param string|null $Image
 	 *
 	 * @return $this
@@ -169,22 +156,6 @@ class Information
 	{
 		$this->Image = $Image;
 		if($Image) {
-			$this->setUpdatedAt(time());
-		}
-		return $this;
-	}
-
-	/**
-	 * @param string|null $Video
-	 *
-	 * @return $this
-	 * @throws Exception
-	 */
-	public function setVideo(?string $Video): self
-	{
-		$this->Video = $Video;
-
-		if($Video) {
 			$this->setUpdatedAt(time());
 		}
 		return $this;

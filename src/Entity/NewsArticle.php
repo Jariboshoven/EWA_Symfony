@@ -54,7 +54,10 @@ class NewsArticle
      */
     private $ImageFile;
 
-    private $timestamp;
+	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	private $Video;
 
     /**
      * NewsArticle constructor.
@@ -216,4 +219,28 @@ class NewsArticle
         }
         return $this;
     }
+
+	/**
+	 * @param string|null $Video
+	 *
+	 * @return $this
+	 * @throws Exception
+	 */
+	public function setVideo(?string $Video): self
+	{
+		$this->Video = $Video;
+
+		if($Video) {
+			$this->setUpdatedAt(time());
+		}
+		return $this;
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getVideo(): ?string
+	{
+		return $this->Video;
+	}
 }

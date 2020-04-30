@@ -24,6 +24,11 @@ class Partner
      */
     private $name;
 
+	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	private $url;
+
     /**
      * @ORM\Column(type="text")
      */
@@ -86,6 +91,29 @@ class Partner
 		}
         return $this;
     }
+
+	/**
+	 * @return string|null
+	 */
+	public function getURL(): ?string
+	{
+		return $this->url;
+	}
+
+	/**
+	 * @param string $url
+	 *
+	 * @return $this
+	 * @throws Exception
+	 */
+	public function setURL(string $url): self
+	{
+		$this->url = $url;
+		if($url){
+			$this->setUpdatedAt(time());
+		}
+		return $this;
+	}
 
     /**
      * @return string|null

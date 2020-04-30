@@ -31,6 +31,7 @@ easy_admin:
         fields:
           - {type: 'group', icon: 'info-circle', label: 'Informatie', css_class: 'col-lg-7'}
           - {property: 'name', type: 'text', label: 'Naam'}
+          - {property: 'url', type: 'text', label: 'Website URL'}
           - {type: 'group', icon: 'photo', label: 'Afbeelding', css_class: 'col-lg-5'}
           - {property: 'ImageFile', type: 'vich_image', label: 'Bestand'}
           - {type: 'group', icon: 'list', label: 'Beschrijving'}
@@ -42,6 +43,7 @@ easy_admin:
         title: Partners
         fields: [
         {property: 'name', label: 'Naam', sortable: true},
+        {property: 'url', label: 'Website URL', sortable: true},
         {property: 'description', label: 'Beschrijving', sortable: true},
         {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
         {property: 'UpdatedAt', type: 'text', label: 'Laatst geupdate', sortable: true},
@@ -50,6 +52,7 @@ easy_admin:
       show:
         fields:
           - {property: 'name', label: 'Naam'}
+          - {property: 'url', label: 'Website URL'}
           - {property: 'description', type: 'raw', label: 'Beschrijving'}
           - {property: 'CreationDate', label: 'Aanmaakdatum'}
           - {property: 'UpdatedAt', label: 'Laatst geupdate'}
@@ -64,6 +67,7 @@ easy_admin:
           - {property: 'published', type: 'checkbox', label: 'Publiceren'}
           - {type: 'group', icon: 'photo', label: 'Afbeelding', css_class: 'col-lg-5'}
           - {property: 'ImageFile', type: 'vich_image', label: 'Bestand'}
+          - {property: 'video', type: 'text', label: 'Video URL'}
           - {type: 'group', icon: 'list', label: 'Beschrijving'}
           - {property: 'description', type: 'text_editor'}
       list:
@@ -88,6 +92,7 @@ easy_admin:
           - {property: 'UpdatedAt', label: 'Laatst geupdate'}
           - {property: 'Published', label: 'Gepubliceerd'}
           - {property: 'image', type: 'image', base_path: '%news_upload_path%', label: 'Afbeelding'}
+          - {property: 'video', type: 'text', label: 'Video URL'}
     Information:
       class: App\Entity\Information
       label: "Informatie"
@@ -98,7 +103,6 @@ easy_admin:
           - {property: 'published', type: 'checkbox', label: 'Publiceren'}
           - {type: 'group', icon: 'photo', label: 'Afbeelding', css_class: 'col-lg-5'}
           - {property: 'ImageFile', type: 'vich_image', label: 'Bestand'}
-          - {property: 'video', type: 'text', label: 'Video URL'}
           - {type: 'group', icon: 'list', label: 'Beschrijving'}
           - {property: 'description', type: 'text_editor'}
       list:
@@ -123,7 +127,6 @@ easy_admin:
           - {property: 'UpdatedAt', label: 'Laatst geupdate'}
           - {property: 'Published', label: 'Gepubliceerd'}
           - {property: 'image', type: 'image', base_path: '%information_upload_path%', label: 'Afbeelding'}
-          - {property: 'video', type: 'text', label: 'Video URL'}
     WebsiteVar:
       disabled_actions: ['delete']
       class: App\Entity\WebsiteVar

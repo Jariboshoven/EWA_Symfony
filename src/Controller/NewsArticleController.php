@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\NewsArticle;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Swift_Message;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -18,13 +21,19 @@ class NewsArticleController extends AbstractController {
 	private $serializer;
 	private $newsArticleRepository;
 
-	public function __construct(EntityManagerInterface $em)
+	private $em;
+	private $mailer;
+
+	public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer)
 	{
+		$this->em = $em;
+		$this->mailer = $mailer;
+
 		$encoders = [new XmlEncoder(), new JsonEncoder()];
 		$normalizers = [new ObjectNormalizer()];
 		$this->serializer = new Serializer($normalizers, $encoders);
 
-		$this->newsArticleRepository = $em->getRepository(NewsArticle::class);
+		$this->newsArticleRepository = $this->em->getRepository(NewsArticle::class);
 	}
 
 	/**
@@ -63,5 +72,34 @@ class NewsArticleController extends AbstractController {
 		$newsArticle = $this->newsArticleRepository->findBy(['id' => $id]);
 		$response = $this->serializer->serialize($newsArticle, 'json');
 		return new Response($response);
+	}
+
+	/**
+	 * @Route("/api/notify/members", name="f", methods={"GET"})
+	 *
+	 * @return Response
+	 * @throws TransportExceptionInterface
+	 */
+	public function notifyMembers()
+	{
+		$newsLetterRegistrationController = new NewsLetterRegistrationController($this->em);
+		$mailAddresses = $newsLetterRegistrationController->getAllNewsMembers();
+
+		$message = (new Swift_Message('Hello Email'))
+			->setFrom('send@example.com')
+			->setTo('jarbo0174@outlook.com')
+			->setBody(
+				'hoi'
+			);
+
+		try {
+			$this->mailer->send($message);
+			var_dump('done');
+		}
+		catch(TransportExceptionInterface $e) {
+			trigger_error('Failed to send Email');
+		}
+
+		return new Response('succes');
 	}
 }
