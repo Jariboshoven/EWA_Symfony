@@ -29,16 +29,27 @@ class NewsLetterRegistrationController extends AbstractController {
 	}
 
 	/**
-	 * @Route("/api/newsmember/add/{email}", name="set_newsmember", methods={"PUT"})
+	 * @Route("/api/newsmember/add/{email}/{name}", name="set_newsmember", methods={"PUT"})
 	 *
-	 * @param string $email
+	 * @param $email
 	 *
+	 * @param $name
 	 * @param EntityManagerInterface $em
 	 *
 	 * @return Response
 	 */
-	public function setNewsMember(string $email, EntityManagerInterface $em): Response
+	public function setNewsMember($email, $name, EntityManagerInterface $em): Response
 	{
+		if(!$email)
+		{
+			return new Response('Vergeet niet uw emailadres in te vullen!');
+		}
+
+		if(!$name)
+		{
+			return new Response('Vergeet niet uw naam in te vullen!');
+		}
+
 		if (count($this->getNewsMemberByEmail($email)) >= 1)
 		{
 			return new Response('Emailadres: ' . $email . ' is al geregistreerd voor nieuws berichten.');
@@ -46,11 +57,12 @@ class NewsLetterRegistrationController extends AbstractController {
 
 		$newsMember = new NewsletterRegistration();
 		$newsMember->setEmail($email);
+		$newsMember->setName($name);
 
 		$em->persist($newsMember);
 		$em->flush();
 
-		return new Response('succes');
+		return new Response('U bent succesvol geregistreerd voor de nieuwsbrief!');
 	}
 
 	/**

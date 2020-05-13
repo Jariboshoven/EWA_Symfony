@@ -59,10 +59,9 @@ class NewsArticle
 	 */
 	private $Video;
 
-    /**
-     * NewsArticle constructor.
-     * @throws Exception
-     */
+	/**
+	 * NewsArticle constructor.
+	 */
     public function __construct()
     {
         $this->setCreationDate(time()) ;

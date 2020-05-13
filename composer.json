@@ -20,7 +20,7 @@
         "symfony/mailer": "4.4.*",
         "symfony/sendgrid-mailer": "4.4.*",
         "symfony/serializer": "4.4.*",
-        "symfony/swiftmailer-bundle": "^3.4",
+        "symfony/twig-bundle": "4.4.*",
         "symfony/twig-pack": "^1.0",
         "symfony/web-server-bundle": "4.4.*",
         "symfony/yaml": "4.4.*",

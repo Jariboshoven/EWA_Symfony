@@ -6,6 +6,7 @@ easy_admin:
         children:
           - {entity: Partner, label: "Alle partners", icon: "th-list"}
           - {entity: Partner, label: "Partner toevoegen", icon: "plus", params: {action: 'new'}}
+      - {entity: NewsletterRegistration, label: "Aanmeldingen", icon: "user"}
       - label: "Nieuws Artikelen"
         children:
           - {entity: NewsArticle, label: "Alle nieuws artikelen", icon: "th-list"}
@@ -79,7 +80,6 @@ easy_admin:
         {property: 'Title', label: 'Titel', sortable: true},
         {property: 'Description', label: 'Beschrijving', sortable: true},
         {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
-        {property: 'CreationDate', type: 'text', label: 'Aanmaakdatum', sortable: true},
         {property: 'UpdatedAt', type: 'text', label: 'Laatst geupdate', sortable: true},
         {property: 'Published', type: 'boolean', label: 'Gepubliceerd', sortable: true}
         {property: 'Image', type: 'image', label: 'Afbeelding', base_path: '%news_upload_path%', sortable: false}
@@ -131,18 +131,23 @@ easy_admin:
       disabled_actions: ['delete']
       class: App\Entity\WebsiteVar
       label: "Informatie van de website"
+      form:
+        fields:
+          - {property: 'title', label: 'Titel', type: 'text'}
+          - {property: 'value', label: 'Waarde', type: 'text_editor'}
+          - {property: 'component', label: 'Onderdeel', type: 'text'}
       list:
         actions: ['show']
         title: Informatie van de website
         fields: [
         {property: 'title', label: 'Titel', sortable: true},
         {property: 'value', label: 'Waarde', sortable: true},
-        {property: 'component', type: 'text', label: 'Onderdeel', sortable: true},
+        {property: 'component', label: 'Onderdeel', sortable: true},
         ]
       show:
         fields:
           - {property: 'title', label: 'Titel'}
-          - {property: 'value', label: 'Waarde'}
+          - {property: 'value', label: 'Waarde', type: 'text'}
           - {property: 'component', label: 'Onderdeel'}
     User:
       disabled_actions: ['delete', 'edit', 'show', 'new']
@@ -152,5 +157,14 @@ easy_admin:
         fields: [
         {property: 'email', label: 'Email ', sortable: true},
         {property: 'roles', label: 'Roles', sortable: true},
+        ]
+    NewsletterRegistration:
+      disabled_actions: ['edit', 'show', 'new']
+      class: App\Entity\NewsletterRegistration
+      list:
+        title: Alle geregistreerde email adressen voor de nieuwsberichten
+        fields: [
+        {property: 'name', label: 'Naam ', sortable: true},
+        {property: 'email', label: 'Email ', sortable: true},
         ]
 

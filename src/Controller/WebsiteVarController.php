@@ -50,4 +50,28 @@ class WebsiteVarController extends AbstractController {
 		$response = $this->serializer->serialize($vars, 'json');
 		return new Response($response);
 	}
+
+	/**
+	 *
+	 * @param int $postId
+	 *
+	 * @return array
+	 */
+	public function getEmailVars(): array
+	{
+		/** @var $mailComponents WebsiteVar[] */
+		$mailComponents = $this->websiteVarRepository->findVarsByComponent('NewsArticleEmail');
+
+		$mailTemplateInfo = [];
+		foreach($mailComponents as $mailComponent)
+		{
+			if(isset($mailTemplateInfo[$mailComponent->getTitle()]))
+			{
+				continue;
+			}
+
+			$mailTemplateInfo[$mailComponent->getTitle()] = $mailComponent->getValue();
+		}
+		return $mailTemplateInfo;
+	}
 }

@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\NewsArticle;
 use Doctrine\ORM\EntityManagerInterface;
-use Swift_Message;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -24,7 +26,7 @@ class NewsArticleController extends AbstractController {
 	private $em;
 	private $mailer;
 
-	public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer)
+	public function __construct(EntityManagerInterface $em, MailerInterface $mailer)
 	{
 		$this->em = $em;
 		$this->mailer = $mailer;
@@ -75,31 +77,76 @@ class NewsArticleController extends AbstractController {
 	}
 
 	/**
-	 * @Route("/api/notify/members", name="f", methods={"GET"})
+	 * @Route("/api/notifymembers/{postId}/{postTitle}", name="notify_members", methods={"POST"})
+	 *
+	 * @param int $postId
+	 * @param string $postTitle
 	 *
 	 * @return Response
-	 * @throws TransportExceptionInterface
 	 */
-	public function notifyMembers()
+	public function notifyNewsLetterRegistrations(int $postId, string $postTitle)
 	{
+
+		$websiteVarController = new WebsiteVarController($this->em);
+		$mailText = $websiteVarController->getEmailVars();
+
+		if(empty($mailText))
+		{
+			return new Response('failed');
+		}
+
+		if(!array_key_exists('Titel', $mailText) || !array_key_exists('Body', $mailText))
+		{
+			return new Response('failed');
+		}
+
+		$mailBody = str_replace(
+			['%POSTID%', '%POSTTITLE%'],
+			[$postId, $postTitle],
+			$mailText['Body']
+		);
+
+		$mailTitle = str_replace(
+			['%POSTID%', '%POSTTITLE%'],
+			[$postId, $postTitle],
+			$mailText['Titel']
+		);
+
+		$mail = (new TemplatedEmail())
+			->from('302726147@student.rocmondriaan.nl')
+			->subject(strip_tags($mailTitle))
+			->html($mailBody)
+		;
+
 		$newsLetterRegistrationController = new NewsLetterRegistrationController($this->em);
 		$mailAddresses = $newsLetterRegistrationController->getAllNewsMembers();
 
-		$message = (new Swift_Message('Hello Email'))
-			->setFrom('send@example.com')
-			->setTo('jarbo0174@outlook.com')
-			->setBody(
-				'hoi'
-			);
+		foreach($mailAddresses as $mailAddress) {
+			$mail->addBcc($mailAddress);
+		}
 
 		try {
-			$this->mailer->send($message);
-			var_dump('done');
+			$this->mailer->send($mail);
+			return new Response('succes');
 		}
 		catch(TransportExceptionInterface $e) {
-			trigger_error('Failed to send Email');
+			return new Response('failed');
 		}
+	}
 
-		return new Response('succes');
+	/**
+	 * @Route("/api/publish/article/{id}", name="publish_article", methods={"POST"})
+	 * @param int $id
+	 *
+	 * @return Response
+	 */
+	public function publishArticle(int $id)
+	{
+		$article = $this->newsArticleRepository->findOneBy(['id' => $id]);
+
+		/** @var $article NewsArticle */
+		$article->setPublished(true);
+
+		return new Response('set published success');
 	}
 }
